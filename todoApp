@@ -1,0 +1,64 @@
+import React,{useState} from 'react';
+
+function TodoForm() {
+
+    const [input, setInput] = useState('');
+    const [todos,setTodos]=useState([]);
+
+
+    const handleChange=e=>{
+       setInput(e.target.value);// to show input in text field 
+    };
+
+    const handleSubmit=e=>{
+        e.preventDefault(); //to stop the refresh or stop go to next page .
+
+        setTodos((oldItems)=>{
+            return[input,...oldItems]; // in this sequence the todos will be shown.
+        }
+        );
+        setInput('');  //to clear field after adding todo .
+    }
+    const handleDelete=()=>{
+        setTodos(()=>{
+            return[];
+    })
+    setInput(''); //TO CLEAR the Todo list.
+};
+const itemDelete=(id)=> {
+   // let todos=todos.filter(item=> item!== todo ) 
+   console.log(todos)
+   // setTodos()
+    setTodos(todos.filter((item,index)=> index !== id)) // to delete items of list
+}
+  
+  return (<>
+  <div className='bigger'>   
+      <div className='smaller'>
+      <h1>Your ToDo App</h1>
+      <input type='text'
+        placeholder='Add a Todo'
+        value={input}
+        name='text'
+        className='todo-input'
+        onChange={handleChange} 
+        />
+        <button onClick={handleSubmit}>Add</button>
+        <button onClick={handleDelete} className='clear'>Clear all</button>
+        <ol>
+          
+            {
+              todos.map((tlist,index)=>{
+                  
+                return <li 
+                {...input} key={index}>{tlist}
+                <button onClick={()=>itemDelete(index)}>X</button></li>
+            })}
+        </ol>
+        </div>
+        </div>
+        </>
+
+  )
+  }
+export default TodoForm;
